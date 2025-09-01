@@ -1,17 +1,40 @@
-# Mattermost Team Edition
+# Mattermost Team Edition OpenShift
 
-> :warning: **This helm chart is no longer supported.** For deploying Mattermost, use our Mattermost Operator [here](../mattermost-operator/). Additionally, we recommend migrating any existing Helm deployments to the Mattermost Operator to guarantee ongoing support and better management capabilities.
+<link rel="icon" href="https://raw.githubusercontent.com/maximilianoPizarro/botpress-helm-chart/main/favicon-152.ico" type="image/x-icon" >
+<p align="left">
+<img src="https://img.shields.io/badge/redhat-CC0000?style=for-the-badge&logo=redhat&logoColor=white" alt="Redhat">
+<img src="https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white" alt="kubernetes">
+<img src="https://img.shields.io/badge/helm-0db7ed?style=for-the-badge&logo=helm&logoColor=white" alt="Helm">
+<img src="https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white" alt="shell">
+<a href="https://www.linkedin.com/in/maximiliano-gregorio-pizarro-consultor-it"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="linkedin" /></a>
+<a href="https://artifacthub.io/packages/search?repo=mattermost-team-edition"><img src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mattermost-team-edition" alt="Artifact Hub" /></a>
+</p>
+
+Mattermost Team Edition is an open-source, self-hosted messaging platform for teams. It offers a free, community-driven solution for secure, private collaboration. Features include group and direct messaging, file sharing, and powerful search, giving your team a modern communication hub.
 
 [Mattermost](https://mattermost.com/) is a hybrid cloud enterprise messaging workspace that brings your messaging and tools together to get more done, faster.
 
 ## TL;DR;
 
 ```bash
-$ helm repo add mattermost https://helm.mattermost.com
-$ helm install mattermost/mattermost-team-edition \
+$ helm repo add mattermost-team-edition https://maximilianopizarro.github.io/mattermost-team-edition/
+```
+
+```bash
+$ oc new-project mattermost && oc adm policy add-scc-to-user anyuid system:serviceaccount:mattermost:default
+```
+
+```bash
+$ helm install mattermost-team-edition/mattermost-team-edition \
   --set mysql.mysqlUser=sampleUser \
   --set mysql.mysqlPassword=samplePassword \
 ```
+
+```bash
+$ oc expose service mattermost-team-edition --port=mattermost-team-edition --hostname=mattermost.apps.rosa.oxkgt-r6dtf-xxq.l9yc.p3.openshiftapps.com --name=mattermost-team-edition --path='/' --termination=edge --insecure-policy=Redirect
+```
+
+Replace mattermost.apps.rosa.oxkgt-r6dtf-xxq.l9yc.p3.openshiftapps.com with your OpenShift cluster's hostname.
 
 ## Introduction
 
@@ -20,95 +43,35 @@ cluster using the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
 
-- Kubernetes 1.9+ with Beta APIs enabled
-- Helm v2/v3
-- [Tiller](https://rancher.com/docs/rancher/v2.x/en/installation/ha/helm-init/) (the Helm v2 server-side component) installed on the cluster
-- [Migrate from Helm v2 to Helm v3](https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/)
+Based on your prerequisites list, here's a revised version that is more accurate, up-to-date, and clear for a modern Kubernetes/OpenShift environment:
+
+* **Kubernetes 1.20+**: This is a clear and direct requirement.
+* **Helm v3**: This is the current standard. Helm v2 and its Tiller component are now deprecated and should not be used. 
+* **Cluster access with `cluster-admin` role**: A user with `cluster-admin` privileges is required to install applications that need to create cluster-wide resources. This is a best practice for a first-time setup or for installing complex applications. For standard installations, namespace-level permissions are often sufficient, but `cluster-admin` is a safe bet to avoid permission-related errors.
+* **OpenShift Cluster v4.14+**: This is a direct statement of the required platform.
+
+---
+### **Revised Prerequisites List**
+
+* **Kubernetes 1.20+**: You need a Kubernetes cluster running version 1.20 or newer.
+* **Helm v3**: Helm v3 must be installed on your local machine. **Tiller is not required** as it was removed in Helm v3.
+* **OpenShift Cluster v4.14+ with `cluster-admin` Access**: You need an active OpenShift cluster and a user account with `cluster-admin` privileges to install and manage applications.
 
 ## Installing the Chart
 
 To install the chart with the release name `my-release`:
 
 ```bash
-$ helm install --name my-release mattermost/mattermost-team-edition
+$ oc new-project mattermost && oc adm policy add-scc-to-user anyuid system:serviceaccount:mattermost:default
 ```
+
  **Helm v3 command**
 ```bash
-$ helm install my-release mattermost/mattermost-team-edition
+$ helm install my-release mattermost-team-edition/mattermost-team-edition
 ```
 
 The command deploys Mattermost on the Kubernetes cluster in the default configuration. The [configuration](#configuration)
 section lists the parameters that can be configured during installation.
-
-## Upgrading the Chart to 3.0.0+
-
-Breaking Helm chart changes was introduced with version 3.0.0. The easiest
-method of resolving them is to simply upgrade the chart and let it fail with and
-provide you with a custom message on what you need to change in your
-configuration. Note that this failure will occur before any changes have been
-made to the k8s cluster.
-
-## Upgrading the Chart to 4.0.0+
-
-The Chart version 4.0.0+ supports only Helm v3, follow the [guide](https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/)
-
-## Upgrading the Chart to 5.0.0+
-
-There were some changes that was introduced in Mattermost version 5.30+ that made this helm chart incompatible and caused the upgrade to fail. To fix that a new Major version of the chart was released, and now the configuration is moved to the database and environment variables.
-
-Steps to migrate:
-
-1 - Copy the existing configuration file from your Secret save it (for backup)
-
-```
-$ kubectl get secrets mm-te-mattermost-team-edition-config-json -o=go-template='{{index .data "config.json"}}' | base64 -d | jq . > config-mm.json
-```
-
-2 - Access the Mattermost pod
-
-```
-$ kubectl exec -it mm-te-mattermost-team-edition-799cc8b475-twglt /bin/sh
-```
-
-3 - Copy the exist config.json to a temp folder, run this inside the container you accessed on Item 2
-
-```
-$ cp config/config.json /tmp
-```
-
-4 - Migrate the config.json to the database (run inside the container that you accessed in the Item 2)
-
-```
-~ $ ./bin/mattermost config migrate /tmp/config.json "mysql://mmuser:mmuser123@tcp(mm-te-mysql:3306)/mattermost?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s"
-{"level":"warn","msg":"DefaultServerLocale must be one of the supported locales. Setting DefaultServerLocale to en as default value."}
-{"level":"warn","msg":"DefaultClientLocale must be one of the supported locales. Setting DefaultClientLocale to en as default value."}
-{"level":"warn","msg":"DefaultServerLocale must be one of the supported locales. Setting DefaultServerLocale to en as default value."}
-{"level":"warn","msg":"DefaultClientLocale must be one of the supported locales. Setting DefaultClientLocale to en as default value."}
-{"level":"info","msg":"Successfully migrated config."}
-```
-
-5 - Update the helm repo
-
-```
-$ helm repo update
-```
-
-6 - Upgrade your mattermost helm, check your existing values, you remove the section `config.json` from your custom values
-and **important** need to keep the existing image tag in this case was 5.29.0
-
-```
-$ helm upgrade  mm-te -f custom_values.yaml --set image.tag=5.29.0 mattermost/mattermost-team-edition
-```
-
-7 - It should deploy and in a few seconds the new Pod for the Mattermost server should be up and running
-
-8 - After all up and running you can upgrade it again to get the latest image tag
-
-```
-$ helm upgrade  mm-te -f custom_values.yaml mattermost/mattermost-team-edition
-```
-
-If in your `custom_values.yaml` you set the image.tag, please update that to the latest available, at the time of this doc was write the version is `5.35.3`
 
 ## Uninstalling the Chart
 
