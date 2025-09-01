@@ -97,9 +97,9 @@ externalDB:
 
 mysql:
   enabled: true
-  mysqlRootPassword: ""
-  mysqlUser: ""
-  mysqlPassword: ""
+  mysqlRootPassword: "mattermost"
+  mysqlUser: "mattermost"
+  mysqlPassword: "mattermost"
   mysqlDatabase: mattermost
 
   repository: mysql
@@ -230,8 +230,9 @@ containerSecurityContext:
   #   type: RuntimeDefault
 
 serviceAccount:
+  automount: true
   create: false
-  name:
+  name: 'default'
   annotations: {}
 
 ## Configuration
