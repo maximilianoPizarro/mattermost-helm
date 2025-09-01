@@ -1,5 +1,5 @@
 apiVersion: v2
-description: Mattermost Team Edition server.
+description: Mattermost Team Edition is an open-source, self-hosted messaging platform for teams. It offers a free, community-driven solution for secure, private collaboration. Features include group and direct messaging, file sharing, and powerful search, giving your team a modern communication hub.
 type: application
 name: mattermost-team-edition
 version: 6.6.83

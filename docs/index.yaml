@@ -5,14 +5,17 @@ entries:
       charts.openshift.io/name: mattermost
     apiVersion: v2
     appVersion: 10.11.2
-    created: "2025-09-01T18:03:03.870894-03:00"
+    created: "2025-09-01T19:06:53.3213198-03:00"
     dependencies:
     - condition: mysql.enabled
       name: mysql
       repository: https://charts.helm.sh/stable
       version: 1.6.4
-    description: Mattermost Team Edition server.
-    digest: 1e91308837807a286c6bb81c2eab9ae53b069836c70318e3b1b190229237e1a2
+    description: Mattermost Team Edition is an open-source, self-hosted messaging
+      platform for teams. It offers a free, community-driven solution for secure,
+      private collaboration. Features include group and direct messaging, file sharing,
+      and powerful search, giving your team a modern communication hub.
+    digest: 55c5efa1581c743ac6d36cd3165858e85fef8bfc0881d64e47dfff970d1d2a4e
     home: https://mattermost.com
     icon: http://www.mattermost.org/wp-content/uploads/2016/04/icon.png
     keywords:
@@ -32,4 +35,4 @@ entries:
     urls:
     - mattermost-team-edition-6.6.83.tgz
     version: 6.6.83
-generated: "2025-09-01T18:03:03.8693408-03:00"
+generated: "2025-09-01T19:06:53.3193164-03:00"
