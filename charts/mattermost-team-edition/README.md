@@ -17,10 +17,6 @@ Mattermost Team Edition is an open-source, self-hosted messaging platform for te
 ## TL;DR;
 
 ```bash
-$ helm repo add mattermost-team-edition https://maximilianopizarro.github.io/mattermost-team-edition/
-```
-
-```bash
 $ oc new-project mattermost && oc adm policy add-scc-to-user anyuid system:serviceaccount:mattermost:default
 ```
 
@@ -51,11 +47,6 @@ Based on your prerequisites list, here's a revised version that is more accurate
 * **OpenShift Cluster v4.14+**: This is a direct statement of the required platform.
 
 ---
-### **Revised Prerequisites List**
-
-* **Kubernetes 1.20+**: You need a Kubernetes cluster running version 1.20 or newer.
-* **Helm v3**: Helm v3 must be installed on your local machine. **Tiller is not required** as it was removed in Helm v3.
-* **OpenShift Cluster v4.14+ with `cluster-admin` Access**: You need an active OpenShift cluster and a user account with `cluster-admin` privileges to install and manage applications.
 
 ## Installing the Chart
 
@@ -127,7 +118,7 @@ $ helm install --name my-release \
   --set image.tag=5.35.3 \
   --set mysql.mysqlUser=sampleUser \
   --set mysql.mysqlPassword=samplePassword \
-  mattermost/mattermost-team-edition
+  mattermost-team-edition/mattermost-team-edition
 ```
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,

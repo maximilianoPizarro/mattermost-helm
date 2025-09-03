@@ -1,0 +1,376 @@
+{
+  "type": "object",
+  "properties": {
+    "image": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "The name of the image repository."
+        },
+        "tag": {
+          "type": "string",
+          "description": "The image tag, including the SHA hash for immutability."
+        },
+        "imagePullPolicy": {
+          "type": "string",
+          "enum": [
+            "IfNotPresent",
+            "Always",
+            "Never"
+          ],
+          "description": "The image pull policy."
+        }
+      },
+      "required": [
+        "repository",
+        "tag",
+        "imagePullPolicy"
+      ]
+    },
+    "initContainerImage": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "The repository for the init container."
+        },
+        "tag": {
+          "type": "string",
+          "description": "The tag for the init container."
+        },
+        "imagePullPolicy": {
+          "type": "string",
+          "enum": [
+            "IfNotPresent",
+            "Always",
+            "Never"
+          ],
+          "description": "The image pull policy for the init container."
+        }
+      },
+      "required": [
+        "repository",
+        "tag",
+        "imagePullPolicy"
+      ]
+    },
+    "deploymentStrategy": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Recreate",
+            "RollingUpdate"
+          ],
+          "description": "The type of deployment strategy."
+        },
+        "rollingUpdate": {
+          "description": "Options for the RollingUpdate strategy."
+        }
+      }
+    },
+    "revisionHistoryLimit": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of old ReplicaSets to retain."
+    },
+    "persistence": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "size": {
+              "type": "string"
+            },
+            "accessMode": {
+              "type": "string"
+            }
+          }
+        },
+        "plugins": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "size": {
+              "type": "string"
+            },
+            "accessMode": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "service": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "externalPort": {
+          "type": "integer"
+        },
+        "internalPort": {
+          "type": "integer"
+        },
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "loadBalancerSourceRanges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "className": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "hosts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tls": {
+          "type": "array"
+        }
+      }
+    },
+    "route": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "externalDB": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "externalDriverType": {
+          "type": "string",
+          "enum": [
+            "postgres",
+            "mysql",
+            ""
+          ]
+        },
+        "externalConnectionString": {
+          "type": "string"
+        }
+      }
+    },
+    "mysql": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "mysqlRootPassword": {
+          "type": "string"
+        },
+        "mysqlUser": {
+          "type": "string"
+        },
+        "mysqlPassword": {
+          "type": "string"
+        },
+        "mysqlDatabase": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "imageTag": {
+          "type": "string"
+        },
+        "testFramework": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          }
+        },
+        "persistence": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "storageClass": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "accessMode": {
+              "type": "string"
+            },
+            "size": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "extraPodAnnotations": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "extraEnvVars": {
+      "type": "array"
+    },
+    "extraInitContainers": {
+      "type": "array"
+    },
+    "extraVolumes": {
+      "type": "array"
+    },
+    "extraVolumeMounts": {
+      "type": "array"
+    },
+    "extraPorts": {
+      "type": "array"
+    },
+    "extraDeploy": {
+      "type": "array"
+    },
+    "nodeSelector": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "affinity": {
+      "type": "object"
+    },
+    "tolerations": {
+      "type": "array"
+    },
+    "securityContext": {
+      "type": "object"
+    },
+    "containerSecurityContext": {
+      "type": "object"
+    },
+    "serviceAccount": {
+      "type": "object",
+      "properties": {
+        "automount": {
+          "type": "boolean"
+        },
+        "create": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "annotations": {
+          "type": "object"
+        }
+      }
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "startupProbe": {
+      "type": "object",
+      "properties": {
+        "initialDelaySeconds": {
+          "type": "integer"
+        },
+        "failureThreshold": {
+          "type": "integer"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "periodSeconds": {
+          "type": "integer"
+        }
+      }
+    },
+    "livenessProbe": {
+      "type": "object",
+      "properties": {
+        "initialDelaySeconds": {
+          "type": "integer"
+        },
+        "failureThreshold": {
+          "type": "integer"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "periodSeconds": {
+          "type": "integer"
+        }
+      }
+    },
+    "readinessProbe": {
+      "type": "object",
+      "properties": {
+        "initialDelaySeconds": {
+          "type": "integer"
+        },
+        "failureThreshold": {
+          "type": "integer"
+        },
+        "timeoutSeconds": {
+          "type": "integer"
+        },
+        "periodSeconds": {
+          "type": "integer"
+        }
+      }
+    },
+    "testJob": {
+      "type": "object",
+      "properties": {
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
