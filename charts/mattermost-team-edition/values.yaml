@@ -82,7 +82,7 @@ ingress:
     #     - mattermost.example.com
 
 route:
-  enabled: false
+  enabled: true
 
 ## If use this please disable the mysql chart by setting mysql.enable to false
 externalDB:

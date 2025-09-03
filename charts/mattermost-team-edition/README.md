@@ -26,11 +26,6 @@ $ helm install mattermost-team-edition/mattermost-team-edition \
   --set mysql.mysqlPassword=samplePassword \
 ```
 
-```bash
-$ oc expose service mattermost-team-edition --port=mattermost-team-edition --hostname=mattermost.apps.rosa.oxkgt-r6dtf-xxq.l9yc.p3.openshiftapps.com --name=mattermost-team-edition --path='/' --termination=edge --insecure-policy=Redirect
-```
-
-Replace mattermost.apps.rosa.oxkgt-r6dtf-xxq.l9yc.p3.openshiftapps.com with your OpenShift cluster's hostname.
 
 ## Introduction
 
