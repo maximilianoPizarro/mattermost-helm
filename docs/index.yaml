@@ -5,7 +5,7 @@ entries:
       charts.openshift.io/name: mattermost
     apiVersion: v2
     appVersion: 10.11.2
-    created: "2025-09-03T10:22:53.9074978-03:00"
+    created: "2025-09-03T10:51:39.5258924-03:00"
     dependencies:
     - condition: mysql.enabled
       name: mysql
@@ -15,7 +15,7 @@ entries:
       platform for teams. It offers a free, community-driven solution for secure,
       private collaboration. Features include group and direct messaging, file sharing,
       and powerful search, giving your team a modern communication hub.
-    digest: a14a425c5355aa631254ad31e3606e7c7ad6f8e54ca4ef11f9d838cedaea134c
+    digest: bb47d7eb189dfce6211a66913a62655c3f3b3d6e146a0e2a9ff1836a35856057
     home: https://mattermost.com
     icon: http://www.mattermost.org/wp-content/uploads/2016/04/icon.png
     keywords:
@@ -35,4 +35,4 @@ entries:
     urls:
     - mattermost-team-edition-6.6.83.tgz
     version: 6.6.83
-generated: "2025-09-03T10:22:53.9059327-03:00"
+generated: "2025-09-03T10:51:39.5243618-03:00"
