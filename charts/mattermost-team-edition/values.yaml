@@ -76,7 +76,7 @@ ingress:
     ####     proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=mattermost_cache:10m max_size=3g inactive=120m use_temp_path=off;
   hosts:
     - mattermost.example.com
-  tls:
+  tls: []
     # - secretName: mattermost.example.com-tls
     #   hosts:
     #     - mattermost.example.com
@@ -212,14 +212,14 @@ tolerations: []
 
 ## Pod Security Context
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-securityContext:
+securityContext: {}
   # fsGroup: 2000
   # runAsGroup: 2000
   # runAsUser: 2000
 
 ## Mattermost container Security Context
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-containerSecurityContext:
+containerSecurityContext: {}
   # allowPrivilegeEscalation: false
   # capabilities:
   #   drop:
